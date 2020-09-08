@@ -5,13 +5,14 @@ using MyContacts.Views;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
 using MyContacts.Shared.Models;
+using MyContacts.Interfaces;
 
 namespace MyContacts.ViewModels
 {
     public class ListViewModel : ContactViewModel
     {
         public DateTime LastUpdate { get; set; }
-        public ListViewModel()
+        public ListViewModel(IDataSource<Contact> dataSource) : base(dataSource)
         {
         }
 

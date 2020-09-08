@@ -9,11 +9,14 @@ using MvvmHelpers.Commands;
 using Xamarin.Essentials;
 using MyContacts.Shared.Models;
 using MyContacts.Utils;
+using MyContacts.Interfaces;
 
 namespace MyContacts.ViewModels
 {
     public class ContactViewModel : ViewModelBase
     {
+        protected ContactViewModel() { }
+        protected ContactViewModel(IDataSource<Contact> dataSource) : base (dataSource) { }
 
         AsyncCommand<string> dialNumberCommand;
 

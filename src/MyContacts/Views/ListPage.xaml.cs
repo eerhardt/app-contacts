@@ -11,10 +11,10 @@ namespace MyContacts.Views
 	{
 		protected ListViewModel ViewModel => BindingContext as ListViewModel;
 
-		public ListPage()
+		public ListPage(ListViewModel viewModel)
 		{
 			InitializeComponent();
-            BindingContext = new ListViewModel();
+            BindingContext = viewModel;
 		}
 
         async void ItemSelected(object sender, SelectedItemChangedEventArgs e)

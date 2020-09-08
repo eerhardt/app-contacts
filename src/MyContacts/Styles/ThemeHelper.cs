@@ -3,6 +3,7 @@ using MyContacts.Interfaces;
 using MyContacts.Models;
 using Xamarin.Forms;
 using Xamarin.Essentials;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MyContacts.Styles
 {
@@ -36,7 +37,7 @@ namespace MyContacts.Styles
 
             
             var background = (Color)App.Current.Resources["PrimaryDarkColor"];
-            var environment = DependencyService.Get<IEnvironment>();
+            var environment = App.Current.Services.GetService<IEnvironment>();
             environment?.SetStatusBarColor(ColorConverters.FromHex(background.ToHex()), false);
         }
 

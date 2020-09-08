@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using MyContacts.Interfaces;
 using MyContacts.Models;
 using MyContacts.Shared.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MyContacts.ViewModels
 {
@@ -12,7 +13,16 @@ namespace MyContacts.ViewModels
 	{
         IDataSource<Contact> dataSource;
         public IDataSource<Contact> DataSource =>
-            dataSource ??= DependencyService.Get<IDataSource<Contact>>();
+            dataSource ??= App.Current.Services.GetService<IDataSource<Contact>>();
+
+        protected ViewModelBase()
+        {
+        }
+
+        protected ViewModelBase(IDataSource<Contact> dataSource)
+        {
+            this.dataSource = dataSource;
+        }
 
 		INavigation Navigation => Application.Current?.MainPage?.Navigation;
 

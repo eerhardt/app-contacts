@@ -1,27 +1,31 @@
-﻿using MyContacts.Constants;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
+using MyContacts.Interfaces;
 using MyContacts.Services;
+using MyContacts.Shared.Models;
 using MyContacts.Styles;
 using MyContacts.Util;
+using MyContacts.ViewModels;
 using MyContacts.Views;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
-[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+[assembly: Xamarin.Forms.Xaml.XamlCompilation(Xamarin.Forms.Xaml.XamlCompilationOptions.Compile)]
 namespace MyContacts
 {
     public partial class App : Application
     {
+        // These 2 properties won't be needed when IServiceProvider is on the base Application class
+        public IServiceProvider Services { get;  }
+        public new static App Current => (App)Application.Current;
+
         public static bool UseLocalDataSource = true;
-        public App()
+        public App(IServiceProvider services)
         {
             InitializeComponent();
 
-            if (UseLocalDataSource)
-                DependencyService.Register<FileDataSource>();
-            else
-                DependencyService.Register<AzureDataStore>();
+            Services = services;
 
-            var navPage = new NavigationPage(new ListPage())
+            var navPage = new NavigationPage(Services.GetService<ListPage>())
             {
                 BarTextColor = Color.White
             };
@@ -43,6 +47,17 @@ namespace MyContacts
         {
             base.OnResume();
             ThemeHelper.ChangeTheme(Settings.ThemeOption, true);
+        }
+
+        public static void ConfigureServices(IServiceCollection services)
+        {
+            if (UseLocalDataSource)
+                services.AddSingleton<IDataSource<Contact>, FileDataSource>();
+            else
+                services.AddSingleton<IDataSource<Contact>, AzureDataStore>();
+
+            services.AddTransient<ListViewModel>();
+            services.AddTransient<ListPage>();
         }
     }
 }

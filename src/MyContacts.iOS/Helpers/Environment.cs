@@ -5,7 +5,6 @@ using MyContacts.Models;
 using UIKit;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(MyContacts.iOS.Helpers.Environment))]
 namespace MyContacts.iOS.Helpers
 {
     public class Environment : IEnvironment
