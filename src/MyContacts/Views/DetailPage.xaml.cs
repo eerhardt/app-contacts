@@ -7,23 +7,34 @@ using Xamarin.Essentials;
 using System.Linq;
 using MyContacts.Models;
 using MyContacts.Shared.Models;
+using MyContacts.Interfaces;
 
 namespace MyContacts.Views
 {
     public partial class DetailPage : ContentPage
     {
+        readonly IDataSource<Contact> dataSource;
+
         protected DetailViewModel ViewModel => BindingContext as DetailViewModel;
 
-        public DetailPage()
+        public DetailPage(DetailViewModel detailViewModel)
         {
             InitializeComponent();
+            BindingContext = detailViewModel;
+            this.dataSource = dataSource;
         }
 
-        public DetailPage(Contact MyContacts)
+        public string ContactId
         {
-            InitializeComponent();
-            BindingContext = new DetailViewModel (MyContacts);
+            get;
+            set;
         }
+
+        //public DetailPage(Contact MyContacts)
+        //{
+        //    InitializeComponent();
+        //    BindingContext = new DetailViewModel (MyContacts);
+        //}
 
         protected override async void OnAppearing()
         {

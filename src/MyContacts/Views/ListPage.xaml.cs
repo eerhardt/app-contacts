@@ -22,7 +22,8 @@ namespace MyContacts.Views
             if (!(e.SelectedItem is Contact a))
                 return;
 
-            await Navigation.PushAsync(new DetailPage(a));
+            await Shell.Current.GoToAsync($"{nameof(DetailPage)}?ContactId={a.Id}");
+            //await Navigation.PushAsync(new DetailPage(a));
 
             ((ListView)sender).SelectedItem = null;
         }

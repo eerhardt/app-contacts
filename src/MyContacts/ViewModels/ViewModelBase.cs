@@ -6,11 +6,12 @@ using MyContacts.Interfaces;
 using MyContacts.Models;
 using MyContacts.Shared.Models;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace MyContacts.ViewModels
 {
-	public abstract class ViewModelBase : BaseViewModel, INavigation
-	{
+    public abstract class ViewModelBase : BaseViewModel, INavigation
+    {
         IDataSource<Contact> dataSource;
         public IDataSource<Contact> DataSource =>
             dataSource ??= App.Current.Services.GetService<IDataSource<Contact>>();
@@ -24,11 +25,15 @@ namespace MyContacts.ViewModels
             this.dataSource = dataSource;
         }
 
-		INavigation Navigation => Application.Current?.MainPage?.Navigation;
+        INavigation Navigation => Application.Current?.MainPage?.Navigation;
 
-	    #region INavigation implementation
+        public virtual void OnNavigatedTo()
+        {          
+        }
 
-		public void RemovePage(Page page)
+        #region INavigation implementation
+
+        public void RemovePage(Page page)
 		{
 			Navigation?.RemovePage(page);
 		}

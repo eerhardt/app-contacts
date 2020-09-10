@@ -8,18 +8,33 @@ using MvvmHelpers.Commands;
 using Command = Xamarin.Forms.Command;
 using MyContacts.Shared.Models;
 using MyContacts.Utils;
+using MyContacts.Interfaces;
+using Xamarin.Forms;
 
 namespace MyContacts.ViewModels
 {
+    [QueryProperty("ContactId", "ContactId")]
     public class DetailViewModel : ContactViewModel
     {
-        public DetailViewModel()
+        readonly IDataSource<Contact> dataSource;
+        public DetailViewModel(IDataSource<Contact> dataSource)
         {
-
+            this.dataSource = dataSource;
         }
-        public DetailViewModel(Contact contact)
+
+        public override async void OnNavigatedTo()
         {
-            Contact = contact;
+            if (Contact == null)
+            {                
+                Contact = await dataSource.GetItem(ContactId);
+                OnPropertyChanged(null);
+            }
+        }
+
+        public string ContactId
+        {
+            get;
+            set;
         }
 
         public Contact Contact { get; private set; }
