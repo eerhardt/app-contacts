@@ -25,13 +25,6 @@ namespace MyContacts
 
             Services = services;
 
-            //var navPage = new NavigationPage(Services.GetService<ListPage>())
-            //{
-            //    BarTextColor = Color.White
-            //};
-
-            //startupPage.Page.SetDynamicResource(Shell..BarBackgroundColorProperty, "PrimaryColor");
-
             // set the MainPage of the app to the navPage
             MainPage = startupPage.Page;
 
