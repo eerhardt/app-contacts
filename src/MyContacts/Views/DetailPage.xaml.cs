@@ -13,15 +13,12 @@ namespace MyContacts.Views
 {
     public partial class DetailPage : ContentPage
     {
-        readonly IDataSource<Contact> dataSource;
-
         protected DetailViewModel ViewModel => BindingContext as DetailViewModel;
 
         public DetailPage(DetailViewModel detailViewModel)
         {
             InitializeComponent();
             BindingContext = detailViewModel;
-            this.dataSource = dataSource;
         }
 
         public string ContactId
