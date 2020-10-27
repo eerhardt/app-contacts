@@ -19,21 +19,14 @@ namespace MyContacts
         public new static App Current => (App)Application.Current;
 
         public static bool UseLocalDataSource = true;
-        public App(IServiceProvider services)
+        public App(IServiceProvider services, IStartupPage startupPage)
         {
             InitializeComponent();
 
             Services = services;
 
-            var navPage = new NavigationPage(Services.GetService<ListPage>())
-            {
-                BarTextColor = Color.White
-            };
-
-            navPage.SetDynamicResource(NavigationPage.BarBackgroundColorProperty, "PrimaryColor");
-
             // set the MainPage of the app to the navPage
-            MainPage = navPage;
+            MainPage = startupPage.Page;
 
         }
 
@@ -56,8 +49,13 @@ namespace MyContacts
             else
                 services.AddSingleton<IDataSource<Contact>, AzureDataStore>();
 
+            services.AddTransient<IStartupPage, AppShell>();
             services.AddTransient<ListViewModel>();
-            services.AddTransient<ListPage>();
+            services.AddTransient<DetailViewModel>();
+            services.RegisterRoute(typeof(ListPage));
+            services.RegisterRoute(typeof(EditPage));
+            services.RegisterRoute(typeof(SettingsPage));
+            services.RegisterRoute(typeof(DetailPage));
         }
     }
 }

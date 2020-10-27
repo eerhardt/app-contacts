@@ -7,6 +7,7 @@ using Xamarin.Essentials;
 using System.Linq;
 using MyContacts.Models;
 using MyContacts.Shared.Models;
+using MyContacts.Interfaces;
 
 namespace MyContacts.Views
 {
@@ -14,16 +15,23 @@ namespace MyContacts.Views
     {
         protected DetailViewModel ViewModel => BindingContext as DetailViewModel;
 
-        public DetailPage()
+        public DetailPage(DetailViewModel detailViewModel)
         {
             InitializeComponent();
+            BindingContext = detailViewModel;
         }
 
-        public DetailPage(Contact MyContacts)
+        public string ContactId
         {
-            InitializeComponent();
-            BindingContext = new DetailViewModel (MyContacts);
+            get;
+            set;
         }
+
+        //public DetailPage(Contact MyContacts)
+        //{
+        //    InitializeComponent();
+        //    BindingContext = new DetailViewModel (MyContacts);
+        //}
 
         protected override async void OnAppearing()
         {
